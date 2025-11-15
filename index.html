@@ -4,19 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Vector Hub</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Chakra+Petch:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Chakra+Petch:wght@500;700&family=Exo+2:wght@900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #00f7ff49;     /* น้ำเงินนีออน */
-      --secondary: #0800ff;   /* น้ำเงินเข้ม */
-      --accent: #ffb300;     /* เหลือง (ปุ่ม Key) */
-      --discord: #5865F2;    /* Discord */
-      --bg-dark: #0a0a1f;    /* พื้นหลังเข้ม */
+      --primary: #00f7ff49;
+      --secondary: #0800ff;
+      --accent: #ffb300;
+      --discord: #5865F2;
+      --bg-dark: #0a0a1f;
       --card-bg: rgba(15, 20, 50, 0.7);
-      --text-neon: #00ff88;   /* เขียวสคริปต์ */
-      --yt-red: #ff0000;     /* YouTube */
+      --text-neon: #00ff88;
+      --yt-red: #ff0000;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,7 +28,6 @@
       position: relative;
     }
 
-    /* อนุภาคพื้นหลัง (สีฟ้า-น้ำเงิน) */
     .particles {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -48,7 +46,6 @@
       50% { transform: translateY(-100vh) scale(1); opacity: 0.7; }
     }
 
-    /* โลโก้ */
     .logo {
       width: 120px; height: 120px;
       border-radius: 50%;
@@ -93,14 +90,15 @@
     }
 
     h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3rem;
-      background: linear-gradient(90deg, var(--primary), #ffffff, var(--secondary));
+      font-family: 'Exo 2', sans-serif !important;
+      font-weight: 900;
+      font-size: 3.2rem;
+      background: linear-gradient(90deg, #00d4ff, #ffffff, #1500ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 0px rgba(0, 0, 255, 0.6);
+      text-shadow: 0 0 30px rgba(0, 212, 255, 0.7);
+      letter-spacing: 4px;
       margin-bottom: 8px;
-      letter-spacing: 3px;
     }
     .tagline {
       font-size: 1.15rem;
@@ -139,7 +137,6 @@
       100% { left: 100%; }
     }
 
-    /* ปุ่มทั้งหมด */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -169,23 +166,10 @@
     }
     .btn:hover::before { left: 100%; }
 
-    /* ปุ่มแต่ละแบบ */
-    .btn-copy {
-      background: linear-gradient(45deg, #00ff88, #00c853);
-      color: #000;
-    }
-    .btn-youtube {
-      background: linear-gradient(45deg, var(--yt-red), #cc0000);
-      color: white;
-    }
-    .btn-key {
-      background: linear-gradient(45deg, var(--accent), #ff8e53);
-      color: white;
-    }
-    .btn-discord {
-      background: linear-gradient(45deg, var(--discord), #7289da);
-      color: white;
-    }
+    .btn-copy { background: linear-gradient(45deg, #00ff88, #00c853); color: #000; }
+    .btn-youtube { background: linear-gradient(45deg, var(--yt-red), #cc0000); color: white; }
+    .btn-key { background: linear-gradient(45deg, var(--accent), #ff8e53); color: white; }
+    .btn-discord { background: linear-gradient(45deg, var(--discord), #7289da); color: white; }
     .btn:hover {
       transform: translateY(-6px) scale(1.06);
       box-shadow: 0 18px 40px rgba(0,0,0,0.6);
@@ -200,7 +184,6 @@
       font-size: 15px;
     }
 
-    /* Modal */
     .modal {
       display: none;
       position: fixed;
@@ -329,17 +312,6 @@
       .btn { padding: 14px 26px; font-size: 16px; min-width: 170px; margin: 8px; }
       .logo { width: 100px; height: 100px; }
     }
-
-    h1 {
-      font-family: 'Exo 2', sans-serif !important; /* เปลี่ยนเฉพาะ h1 */
-      font-weight: 900;
-      font-size: 3.2rem;
-      background: linear-gradient(90deg, #00d4ff, #ffffff, #1500ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 30px rgba(0, 212, 255, 0.7);
-      letter-spacing: 4px;
-    }
   </style>
 </head>
 <body>
@@ -352,29 +324,19 @@
     <h1>VECTOR HUB</h1>
     <p class="tagline">Premium Roblox Script • Free Key System</p>
     
-    <div class="script-box" id="scriptText">
-      loadstring(game:HttpGet("https://raw.githubusercontent.com/AAwful/Vector_Hub/0/v2"))()
-    </div>
+    <div class="script-box" id="scriptText"></div>
     
-    <button class="btn btn-copy" onclick="copyScript()">
-      Copy Script
-    </button>
+    <button class="btn btn-copy" onclick="copyScript()">Copy Script</button>
     
     <div class="copied" id="copiedMsg">คัดลอกแล้ว!</div>
 
-    <a href="https://www.youtube.com/@VectorHub" class="btn btn-youtube" target="_blank">
-      YouTube
-    </a>
+    <a href="https://www.youtube.com/@VectorHub" class="btn btn-youtube" target="_blank">YouTube</a>
 
     <br><br>
     
-    <button class="btn btn-key" onclick="openModal()">
-      How to Get Key 
-    </button>
+    <button class="btn btn-key" onclick="openModal()">How to Get Key</button>
     
-    <a href="https://discord.gg/977JQXX82w" class="btn btn-discord" target="_blank">
-      Join Discord
-    </a>
+    <a href="https://discord.gg/977JQXX82w" class="btn btn-discord" target="_blank">Join Discord</a>
   </div>
 
   <footer>© 2025 Vector Hub • All Rights Reserved</footer>
@@ -385,25 +347,56 @@
       <h2>วิธีรับ Key</h2>
       
       <div class="video-container">
-        <iframe src="https://www.youtube.com/watch?v=nvHjqzE_DBY" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/nvHjqzE_DBY" allowfullscreen></iframe>
       </div>
       
-      <div class="key-buttons">
-        <a href="https://ads.luarmor.net/get_key?for=Vector_Hub_key_Linkvertise-rfYqIZgphQnH" class="key-btn" target="_blank">
-          Linkvertise
-        </a>
-        <a href="https://ads.luarmor.net/get_key?for=Vector_Hub_key_Workink-NFztOeNDvycF" class="key-btn" target="_blank">
-          Workink
-        </a>
-        <a href="https://ads.luarmor.net/get_key?for=Vector_Hub_Key_LootLabs-ZtJHdmBwPcca" class="key-btn" target="_blank">
-          Lootlabs
-        </a>
-      </div>
+      <div class="key-buttons" id="keyButtons"></div>
     </div>
   </div>
 
   <script>
+    // === OBFUSCATED DATA ===
+    const _0x4e1f = [
+      'bG9hZHN0cmluZyhnYW1lOkh0dHBHZXR7Imh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9BQXdmdWwvVmVjdG9yX0h1Yi8wL3YyIil9KQ==',
+      'aHR0cHM6Ly9hZHMubHVhcm1vci5uZXQvZ2V0X2tleT9mb3I9VmVjdG9yX0h1Yl9rZXlfTGlua3ZlcnRpc2UtcmZZcUl6Z3BIUW5I',
+      'aHR0cHM6Ly9hZHMubHVhcm1vci5uZXQvZ2V0X2tleT9mb3I9VmVjdG9yX0h1Yl9rZXlfV29ya2luay1ORnp0T2VORHZ5Y0Y=',
+      'aHR0cHM6Ly9hZHMubHVhcm1vci5uZXQvZ2V0X2tleT9mb3I9VmVjdG9yX0h1Yl9LZXlfTG9vdExhYnMtWnRKSGRtQndQY2Nh'
+    ];
+    (function(_0x2a3b, _0x4c5d) {
+      const _0x5e6f = function(_0x7g8h) {
+        while (--_0x7g8h) { _0x2a3b['push'](_0x2a3b['shift']()); }
+      };
+      _0x5e6f(++_0x4c5d);
+    }(_0x4e1f, 0x1a2));
 
+    const _0x9abc = function(_0xdef1, _0xghi2) {
+      _0xdef1 = _0xdef1 - 0x0;
+      let _0xjkl3 = _0x4e1f[_0xdef1];
+      return _0xjkl3;
+    };
+
+    // === DECODING ===
+    const script = atob(_0x9abc('0x0'));
+    const keys = [
+      atob(_0x9abc('0x1')),
+      atob(_0x9abc('0x2')),
+      atob(_0x9abc('0x3'))
+    ];
+
+    // === RENDER ===
+    document.getElementById('scriptText').innerText = script;
+    const keyButtons = document.getElementById('keyButtons');
+    const keyNames = ['Linkvertise', 'Workink', 'Lootlabs'];
+    keys.forEach((url, i) => {
+      const a = document.createElement('a');
+      a.href = url;
+      a.className = 'key-btn';
+      a.target = '_blank';
+      a.innerHTML = `${keyNames[i]}`;
+      keyButtons.appendChild(a);
+    });
+
+    // === PARTICLES ===
     const particlesContainer = document.getElementById('particles');
     for (let i = 0; i < 60; i++) {
       const p = document.createElement('div');
@@ -415,9 +408,9 @@
       particlesContainer.appendChild(p);
     }
 
+    // === FUNCTIONS ===
     function copyScript() {
-      const text = document.getElementById("scriptText").innerText;
-      navigator.clipboard.writeText(text).then(() => {
+      navigator.clipboard.writeText(script).then(() => {
         const msg = document.getElementById("copiedMsg");
         msg.style.opacity = 1;
         setTimeout(() => { msg.style.opacity = 0; }, 2000);
