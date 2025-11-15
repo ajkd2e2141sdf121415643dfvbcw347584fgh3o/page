@@ -1,239 +1,412 @@
 <!DOCTYPE html>
 <html lang="th">
-	head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<title>Vector Hub</title>
-	<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&display=swap" rel="stylesheet">
-	<style>
-		* { margin: 0; padding: 0; box-sizing: border-box; }
-		body {
-			font-family: 'Chakra Petch', sans-serif;
-			background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-			color: #fff;
-			min-height: 100vh;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			padding: 20px;
-			overflow-x: hidden;
-		}
-		.container {
-			max-width: 600px;
-			width: 100%;
-			background: rgba(255,255,255,0.05);
-			backdrop-filter: blur(12px);
-			border-radius: 20px;
-			padding: 30px;
-			margin-top: 20px;
-			box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-			border: 1px solid rgba(255,255,255,0.1);
-			text-align: center;
-			position: relative;
-			z-index: 1;
-		}
-		h1 {
-			font-size: 2.2rem;
-			background: linear-gradient(90deg, #00dbde, #fc00ff);
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
-			margin-bottom: 20px;
-		}
-		.script-box {
-			background: #1a1a2e;
-			padding: 18px;
-			border-radius: 12px;
-			margin: 20px 0;
-			font-family: 'Courier New', monospace;
-			font-size: 14px;
-			color: #00ff88;
-			text-align: left;
-			user-select: text;
-			word-break: break-all;
-			border: 1px solid #00ff88;
-		}
-		.btn {
-			display: inline-block;
-			padding: 14px 28px;
-			margin: 10px;
-			border-radius: 50px;
-			font-weight: bold;
-			text-decoration: none;
-			font-size: 16px;
-			transition: all 0.3s;
-			box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-			min-width: 180px;
-			cursor: pointer;
-		}
-		.btn-copy { background: #00ff88; color: #000; }
-		.btn-key { background: #ff6b6b; color: white; }
-		.btn-discord { background: #5865F2; color: white; }
-		.btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.6); }
-		.copied { color: #00ff88; font-size: 14px; margin-top: 10px; opacity: 0; transition: opacity 0.3s; }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vector Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Chakra+Petch:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --primary: #00dbde;
+      --secondary: #fc00ff;
+      --accent: #ff6b6b;
+      --discord: #5865F2;
+      --bg-dark: #0a0a1a;
+      --card-bg: rgba(20, 20, 40, 0.6);
+      --text-neon: #00ff88;
+    }
 
-		/* Modal GUI */
-		.modal {
-			display: none;
-			position: fixed;
-			top: 0; left: 0; right: 0; bottom: 0;
-			background: rgba(0,0,0,0.85);
-			backdrop-filter: blur(10px);
-			align-items: center;
-			justify-content: center;
-			z-index: 9999;
-			padding: 20px;
-		}
-		.modal.active { display: flex; }
-		.modal-content {
-			background: #1a1a2e;
-			border-radius: 20px;
-			max-width: 700px;
-			width: 100%;
-			max-height: 90vh;
-			overflow-y: auto;
-			padding: 25px;
-			border: 1px solid #00dbde;
-			box-shadow: 0 0 30px rgba(0, 219, 222, 0.3);
-			position: relative;
-		}
-		.close-btn {
-			position: absolute;
-			top: 15px; right: 20px;
-			background: #ff6b6b;
-			color: white;
-			border: none;
-			width: 36px; height: 36px;
-			border-radius: 50%;
-			font-size: 20px;
-			cursor: pointer;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
-		.modal h2 {
-			text-align: center;
-			background: linear-gradient(90deg, #ff6b6b, #ffd93d);
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
-			margin-bottom: 15px;
-		}
-		.video-container {
-			position: relative;
-			padding-bottom: 56.25%;
-			height: 0;
-			overflow: hidden;
-			border-radius: 12px;
-			margin: 15px 0;
-			box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-		}
-		.video-container iframe {
-			position: absolute;
-			top: 0; left: 0;
-			width: 100%; height: 100%;
-			border: none;
-		}
-		.key-buttons {
-			display: grid;
-			gap: 12px;
-			margin-top: 15px;
-		}
-		.key-btn {
-			padding: 14px;
-			background: #4ecdc4;
-			color: white;
-			text-align: center;
-			border-radius: 12px;
-			font-weight: bold;
-			text-decoration: none;
-			transition: 0.3s;
-		}
-		.key-btn:hover {
-			background: #45b7aa;
-			transform: translateY(-2px);
-		}
-		footer {
-			margin-top: 40px;
-			font-size: 12px;
-			opacity: 0.6;
-		}
-	</style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Chakra Petch', sans-serif;
+      background: var(--bg-dark);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* อนุภาคพื้นหลัง */
+    .particles {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+    }
+    .particle {
+      position: absolute;
+      background: var(--primary);
+      border-radius: 50%;
+      opacity: 0;
+      animation: float 6s infinite ease-in-out;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(0.5); opacity: 0; }
+      50% { transform: translateY(-100vh) scale(1); opacity: 0.6; }
+    }
+
+    /* โลโก้ */
+    .logo {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid transparent;
+      background: linear-gradient(45deg, var(--primary), var(--secondary)) padding-box,
+                  linear-gradient(45deg, var(--primary), var(--secondary)) border-box;
+      box-shadow: 0 0 30px rgba(0, 219, 222, 0.6);
+      animation: pulse 2s infinite;
+      margin-bottom: 15px;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(0, 219, 222, 0.6); }
+      50% { box-shadow: 0 0 40px rgba(0, 219, 222, 0.9); }
+    }
+
+    .container {
+      max-width: 650px;
+      width: 100%;
+      margin: 30px auto;
+      padding: 35px;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border-radius: 25px;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 
+        0 20px 40px rgba(0,0,0,0.4),
+        0 0 60px rgba(0, 219, 222, 0.2),
+        inset 0 0 20px rgba(255,255,255,0.05);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      animation: fadeIn 1s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.8rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary), #ff6b6b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(0, 219, 222, 0.4);
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+    .tagline {
+      font-size: 1.1rem;
+      color: #a0a0ff;
+      margin-bottom: 25px;
+      font-weight: 500;
+    }
+
+    .script-box {
+      background: rgba(10, 10, 30, 0.8);
+      padding: 20px;
+      border-radius: 16px;
+      margin: 25px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 15px;
+      color: var(--text-neon);
+      text-align: left;
+      user-select: text;
+      word-break: break-all;
+      border: 2px dashed var(--text-neon);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+    }
+    .script-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0,255,136,0.1));
+      animation: scan 3s infinite;
+    }
+    @keyframes scan {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 32px;
+      margin: 12px;
+      border: none;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 17px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      min-width: 200px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: 0.6s;
+    }
+    .btn:hover::before { left: 100%; }
+
+    .btn-copy {
+      background: linear-gradient(45deg, #00ff88, #00c853);
+      color: #000;
+    }
+    .btn-key {
+      background: linear-gradient(45deg, var(--accent), #ff8e53);
+      color: white;
+    }
+    .btn-discord {
+      background: linear-gradient(45deg, var(--discord), #7289da);
+      color: white;
+    }
+    .btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+
+    .copied {
+      color: #00ff88;
+      font-weight: bold;
+      margin-top: 10px;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(12px);
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 15px;
+    }
+    .modal.active { display: flex; animation: modalFade 0.5s; }
+    @keyframes modalFade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border-radius: 25px;
+      max-width: 750px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 30px;
+      border: 2px solid var(--primary);
+      box-shadow: 
+        0 0 60px rgba(0, 219, 222, 0.4),
+        inset 0 0 30px rgba(255,255,255,0.05);
+      position: relative;
+      animation: modalPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes modalPop {
+      0% { transform: scale(0.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 18px; right: 22px;
+      background: #ff4757;
+      color: white;
+      border: none;
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      font-size: 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 5px 15px rgba(255,71,87,0.4);
+      transition: 0.3s;
+    }
+    .close-btn:hover {
+      background: #ff3742;
+      transform: rotate(90deg);
+    }
+
+    .modal h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      background: linear-gradient(90deg, #ffd93d, #ff6b6b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 16px;
+      margin: 20px 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border: 2px solid var(--primary);
+    }
+    .video-container iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    .key-buttons {
+      display: grid;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .key-btn {
+      padding: 18px;
+      background: linear-gradient(45deg, #4ecdc4, #44a08d);
+      color: white;
+      text-align: center;
+      border-radius: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.4s;
+      box-shadow: 0 8px 20px rgba(78, 205, 196, 0.3);
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .key-btn:hover {
+      transform: translateY(-4px);
+      background: linear-gradient(45deg, #45b7aa, #3d8b85);
+      box-shadow: 0 12px 25px rgba(78, 205, 196, 0.5);
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 13px;
+      opacity: 0.6;
+      z-index: 2;
+      position: relative;
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 25px; }
+      h1 { font-size: 2.2rem; }
+      .btn { padding: 14px 24px; font-size: 16px; min-width: 160px; }
+    }
+  </style>
 </head>
 <body>
 
-	<div class="container">
-		<h1>Vector Hub</h1>
-		
-		<div class="script-box" id="scriptText">
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/AAwful/Vector_Hub/0/v2"))()
-		</div>
-		
-		<button class="btn btn-copy" onclick="copyScript()">
-			Copy Script
-		</button>
-		
-		<div class="copied" id="copiedMsg">คัดลอกแล้ว!</div>
-		
-		<br><br>
-		
-		<button class="btn btn-key" onclick="openModal()">
-			How to Get Key
-		</button>
-		
-		<a href="https://discord.gg/977JQXX82w" class="btn btn-discord" target="_blank">
-			Join Discord
-		</a>
-	</div>
+  <!-- อนุภาคพื้นหลัง -->
+  <div class="particles" id="particles"></div>
 
-	<footer>Vector Hub • Free Script</footer>
+  <div class="container">
+    <!-- ใส่ลิงก์โลโก้ที่นี่ -->
+    <img src="https://lh3.googleusercontent.com/pw/AP1GczMsHQhGD7fUxK00bjl0DdhTj13MSkVGNmCnM45faAtxP1jeKr7GrGzSlmdMiuYZQC76xAnNF4ruTSK06jImykZUXTdWIL-WxGvijeAI6wgPojWuYOi4J4uzb5-AQ4KoZo47-HH7vn4HKNumy5zOCOft=w150-h150-s-no-gm?authuser=0" alt="Vector Hub Logo" class="logo">
+    
+    <h1>VECTOR HUB</h1>
+    <p class="tagline">Premium Roblox Script • Free Key System</p>
+    
+    <div class="script-box" id="scriptText">
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/AAwful/Vector_Hub/0/v2"))()
+    </div>
+    
+    <button class="btn btn-copy" onclick="copyScript()">
+      Copy Script
+    </button>
+    
+    <div class="copied" id="copiedMsg">คัดลอกแล้ว!</div>
+    
+    <br><br>
+    
+    <button class="btn btn-key" onclick="openModal()">
+      How to Get Key
+    </button>
+    
+    <a href="https://discord.gg/977JQXX82w" class="btn btn-discord" target="_blank">
+      Join Discord
+    </a>
+  </div>
 
-	<!-- Modal GUI -->
-	<div class="modal" id="keyModal">
-		<div class="modal-content">
-			<button class="close-btn" onclick="closeModal()">×</button>
-			<h2>วิธีรับ Key</h2>
-			
-			<div class="video-container">
-				<iframe src="https://www.youtube.com/embed/nvHjqzE_DBY" allowfullscreen></iframe>
-			</div>
-			
-			<div class="key-buttons">
-				<a href="https://ads.luarmor.net/get_key?for=Vector_Hub_key_Linkvertise-rfYqIZgphQnH" class="key-btn" target="_blank">
-					Linkvertise
-				</a>
-				<a href="https://ads.luarmor.net/get_key?for=Vector_Hub_key_Workink-NFztOeNDvycF" class="key-btn" target="_blank">
-					Workink
-				</a>
-				<a href="https://ads.luarmor.net/get_key?for=Vector_Hub_Key_LootLabs-ZtJHdmBwPcca" class="key-btn" target="_blank">
-					Lootlabs
-				</a>
-			</div>
-		</div>
-	</div>
+  <footer>© 2025 Vector Hub • All Rights Reserved</footer>
 
-	<script>
-		function copyScript() {
-			const text = document.getElementById("scriptText").innerText;
-			navigator.clipboard.writeText(text).then(() => {
-				const msg = document.getElementById("copiedMsg");
-				msg.style.opacity = 1;
-				setTimeout(() => { msg.style.opacity = 0; }, 2000);
-			});
-		}
+  <!-- Modal -->
+  <div class="modal" id="keyModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">×</button>
+      <h2>วิธีรับ Key</h2>
+      
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/nvHjqzE_DBY" allowfullscreen></iframe>
+      </div>
+      
+      <div class="key-buttons">
+        <a href="https://ads.luarmor.net/get_key?for=Vector_Hub_key_Linkvertise-rfYqIZgphQnH" class="key-btn" target="_blank">
+          Linkvertise
+        </a>
+        <a href="https://ads.luarmor.net/get_key?for=Vector_Hub_key_Workink-NFztOeNDvycF" class="key-btn" target="_blank">
+          Workink
+        </a>
+        <a href="https://ads.luarmor.net/get_key?for=Vector_Hub_Key_LootLabs-ZtJHdmBwPcca" class="key-btn" target="_blank">
+          Lootlabs
+        </a>
+      </div>
+    </div>
+  </div>
 
-		function openModal() {
-			document.getElementById("keyModal").classList.add("active");
-			document.body.style.overflow = "hidden";
-		}
+  <script>
+    // อนุภาคพื้นหลัง
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 50; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.width = p.style.height = Math.random() * 6 + 3 + 'px';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.animationDelay = Math.random() * 6 + 's';
+      p.style.animationDuration = (Math.random() * 5 + 5) + 's';
+      particlesContainer.appendChild(p);
+    }
 
-		function closeModal() {
-			document.getElementById("keyModal").classList.remove("active");
-			document.body.style.overflow = "auto";
-		}
+    // คัดลอกสคริปต์
+    function copyScript() {
+      const text = document.getElementById("scriptText").innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const msg = document.getElementById("copiedMsg");
+        msg.style.opacity = 1;
+        setTimeout(() => { msg.style.opacity = 0; }, 2000);
+      });
+    }
 
-		// ปิด modal เมื่อกดนอกกรอบ
-		document.getElementById("keyModal").addEventListener("click", function(e) {
-			if (e.target === this) closeModal();
-		});
-	</script>
+    // Modal
+    function openModal() {
+      document.getElementById("keyModal").classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+    function closeModal() {
+      document.getElementById("keyModal").classList.remove("active");
+      document.body.style.overflow = "auto";
+    }
+    document.getElementById("keyModal").addEventListener("click", function(e) {
+      if (e.target === this) closeModal();
+    });
+  </script>
 </body>
 </html>
